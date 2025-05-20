@@ -1,16 +1,33 @@
+import { useState } from 'react'
 import { Button, Form, Input } from 'antd'
 import { Link } from 'react-router-dom'
 import { loginUser } from '../../api/user'
 
 const Login = () => {
+    const [message, setMessage] = useState('');
+    const [isError, setIsError] = useState(false);
 
     const login = async (values) => {
         try {
             const response = await loginUser(values);
             const data = response.data;
-            console.log(data);
+            const token = data.token;
+            if (data.success) {
+                setMessage(data.message);
+                setIsError(false);
+                localStorage.setItem('token', token);
+            } else {
+                setMessage(data.message || 'Login failed');
+                setIsError(true);
+            }
         } catch (err) {
             console.log(err);
+            setMessage('Something went wrong');
+            setIsError(true);
+        } finally {
+            setTimeout(() => {
+                setMessage('');
+            }, 3000);
         }
     }
 
@@ -22,6 +39,19 @@ const Login = () => {
                         <h1>Login to BookMyShow</h1>
                     </section>
                     <section className="right-section">
+                        {message && (
+                            <div style={{
+                                marginBottom: '1rem',
+                                padding: '10px',
+                                color: isError ? '#ff4d4f' : '#52c41a',
+                                background: isError ? '#fff1f0' : '#f6ffed',
+                                border: `1px solid ${isError ? '#ffa39e' : '#b7eb8f'}`,
+                                borderRadius: '4px',
+                                textAlign: 'center'
+                            }}>
+                                {message}
+                            </div>
+                        )}
                         <Form layout='vertical' onFinish={login}>
                             <Form.Item
                                 name="email"

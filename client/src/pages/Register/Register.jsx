@@ -1,15 +1,33 @@
+import { useState } from 'react';
 import { Button, Form, Input } from 'antd'
 import { Link } from 'react-router-dom'
 import { registerUser } from '../../api/user';
 
 const Register = () => {
 
+    const [message, setMessage] = useState('');
+    const [isError, setIsError] = useState(false);
     const register = async (values) => {
         try {
             const response = await registerUser(values);
-            console.log(response);
+            const data = response.data;
+            console.log(data);
+            if (data.success) {
+                console.log(data);
+                setMessage(data.message);
+                setIsError(false);
+            } else {
+                setMessage(data.message || 'Registration failed');
+                setIsError(true);
+            }
         } catch (err) {
             console.log(err);
+            setMessage('Something went wrong');
+            setIsError(true);
+        } finally {
+            setTimeout(() => {
+                setMessage('');
+            }, 3000);
         }
     }
 
@@ -21,6 +39,19 @@ const Register = () => {
                         <h1>Register to BookMyShow</h1>
                     </section>
                     <section className="right-section">
+                        {message && (
+                            <div style={{
+                                marginBottom: '1rem',
+                                padding: '10px',
+                                color: isError ? '#ff4d4f' : '#52c41a',
+                                background: isError ? '#fff1f0' : '#f6ffed',
+                                border: `1px solid ${isError ? '#ffa39e' : '#b7eb8f'}`,
+                                borderRadius: '4px',
+                                textAlign: 'center'
+                            }}>
+                                {message}
+                            </div>
+                        )}
                         <Form layout='vertical' onFinish={register}>
                             <Form.Item
                                 name="name"
