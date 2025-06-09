@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Radio } from 'antd'
 import { Link } from 'react-router-dom'
 import { registerUser } from '../../api/user';
 
@@ -76,6 +76,21 @@ const Register = () => {
                                 rules={[{ required: true, message: 'Please input your password!' }]}
                             >
                                 <Input type="password" placeholder="Password" />
+                            </Form.Item>
+                            <Form.Item
+                                name="role"
+                                label="Register as a Partner"
+                                htmlFor='role'
+                                className='d-block text-center'
+                                initialValue={false}
+                                rules={[{ required: true, message: 'Please input your name!' }]}
+                            >
+                                <div style={{ display: 'flex', justifyContent: 'start' }}>
+                                    <Radio.Group name='radiogroup' className='flex-start'>
+                                        <Radio value="partner">Yes</Radio>
+                                        <Radio value="user">No</Radio>
+                                    </Radio.Group>
+                                </div>
                             </Form.Item>
                             <Button
                                 type='primary'
