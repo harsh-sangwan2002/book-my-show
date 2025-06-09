@@ -36,7 +36,7 @@ const Login = () => {
             <header className="App-header">
                 <main className="main-area mw-500 text-center px-3">
                     <section className="left-section">
-                        <h1>Login to BookMyShow</h1>
+                        <h1 style={{ fontSize: '2.3rem' }}>Login to BookMyShow</h1>
                     </section>
                     <section className="right-section">
                         {message && (
