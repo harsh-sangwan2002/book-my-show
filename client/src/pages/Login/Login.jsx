@@ -1,11 +1,10 @@
-import { useState } from 'react'
-import { Button, Form, Input } from 'antd'
-import { Link } from 'react-router-dom'
+import { Button, Form, Input, message } from 'antd'
+import { Link, useNavigate } from 'react-router-dom'
 import { loginUser } from '../../api/user'
 
 const Login = () => {
-    const [message, setMessage] = useState('');
-    const [isError, setIsError] = useState(false);
+    const [messageApi, contentHolder] = message.useMessage();
+    const navigate = useNavigate();
 
     const login = async (values) => {
         try {
@@ -13,21 +12,24 @@ const Login = () => {
             const data = response.data;
             const token = data.token;
             if (data.success) {
-                setMessage(data.message);
-                setIsError(false);
+                messageApi.open({
+                    type: "success",
+                    content: data.message
+                })
                 localStorage.setItem('token', token);
+                navigate('/')
             } else {
-                setMessage(data.message || 'Login failed');
-                setIsError(true);
+                messageApi.open({
+                    type: "error",
+                    content: data.message
+                })
             }
         } catch (err) {
             console.log(err);
-            setMessage('Something went wrong');
-            setIsError(true);
-        } finally {
-            setTimeout(() => {
-                setMessage('');
-            }, 3000);
+            messageApi.open({
+                type: "error",
+                content: "Login Failed"
+            })
         }
     }
 
@@ -39,19 +41,7 @@ const Login = () => {
                         <h1 style={{ fontSize: '2.3rem' }}>Login to BookMyShow</h1>
                     </section>
                     <section className="right-section">
-                        {message && (
-                            <div style={{
-                                marginBottom: '1rem',
-                                padding: '10px',
-                                color: isError ? '#ff4d4f' : '#52c41a',
-                                background: isError ? '#fff1f0' : '#f6ffed',
-                                border: `1px solid ${isError ? '#ffa39e' : '#b7eb8f'}`,
-                                borderRadius: '4px',
-                                textAlign: 'center'
-                            }}>
-                                {message}
-                            </div>
-                        )}
+                        {contentHolder}
                         <Form layout='vertical' onFinish={login}>
                             <Form.Item
                                 name="email"

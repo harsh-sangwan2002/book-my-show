@@ -1,17 +1,17 @@
 import { axiosInstance } from ".";
 
-export const loginUser = async (values) => {
+export const loginUser = async (payload) => {
     try {
-        const response = await axiosInstance.post('/users/login', values);
+        const response = await axiosInstance.post('/users/login', payload);
         return response;
     } catch (err) {
         return err;
     }
 }
 
-export const registerUser = async (values) => {
+export const registerUser = async (payload) => {
     try {
-        const response = await axiosInstance.post('/users/register', values);
+        const response = await axiosInstance.post('/users/register', payload);
         return response;
     } catch (err) {
         return err;
