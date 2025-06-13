@@ -1,8 +1,9 @@
 const userRouter = require('express').Router();
-const { loginUser, registerUser, getAllUsers } = require('../controllers/user.controller');
+const { loginUser, registerUser, getCurrentUser } = require('../controllers/user.controller');
+const authMiddleware = require('../middlewares/auth.middleware');
 
 userRouter.post('/login', loginUser)
     .post('/register', registerUser)
-    .get('/', getAllUsers);
+    .get('/get-current-user', authMiddleware, getCurrentUser);
 
 module.exports = userRouter;

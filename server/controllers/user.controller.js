@@ -77,13 +77,13 @@ const registerUser = async (req, res) => {
     }
 }
 
-const getAllUsers = async (req, res) => {
+const getCurrentUser = async (req, res) => {
     try {
-        const users = await userModel.find();
+        const user = await userModel.findById(req.userId).select('-password');
         return res.status(200).json({
             message: "Users fetched successfully",
             success: true,
-            users,
+            user,
         });
     } catch (err) {
         res.status(500).json({
@@ -96,5 +96,5 @@ const getAllUsers = async (req, res) => {
 module.exports = {
     loginUser,
     registerUser,
-    getAllUsers,
+    getCurrentUser,
 }

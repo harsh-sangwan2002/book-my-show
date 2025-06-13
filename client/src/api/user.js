@@ -17,3 +17,12 @@ export const registerUser = async (payload) => {
         return err;
     }
 }
+
+export const getCurrentUser = async (payload) => {
+    try {
+        const response = await axiosInstance.get('/users/get-current-user', payload);
+        return response;
+    } catch (err) {
+        return err;
+    }
+}

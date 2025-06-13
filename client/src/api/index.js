@@ -5,5 +5,15 @@ export const axiosInstance = axios.create({
     headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
         withCredentials: true,
+        'Content-Type': 'application/json'
     },
 });
+
+axiosInstance.interceptors.request.use(function (config) {
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return config;
+})
