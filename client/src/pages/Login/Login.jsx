@@ -1,16 +1,22 @@
 import { Button, Form, Input, message } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { loginUser } from '../../api/user'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../redux/userSlice'
+import { useEffect } from 'react'
 
 const Login = () => {
     const [messageApi, contentHolder] = message.useMessage();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const login = async (values) => {
         try {
             const response = await loginUser(values);
             const data = response.data;
+            const user = data.user
             const token = data.token;
+            dispatch(setUser({ user }));
             if (data.success) {
                 messageApi.open({
                     type: "success",
@@ -33,12 +39,18 @@ const Login = () => {
         }
     }
 
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigate('/')
+        }
+    }, [])
+
     return (
         <>
             <header className="App-header">
                 <main className="main-area mw-500 text-center px-3">
                     <section className="left-section">
-                        <h1 style={{ fontSize: '2.3rem' }}>Login to BookMyShow</h1>
+                        <h1 style={{ fontSize: '2.3rem', marginBottom: '2rem' }}>Login to BookMyShow</h1>
                     </section>
                     <section className="right-section">
                         {contentHolder}
@@ -68,7 +80,7 @@ const Login = () => {
                                 Login
                             </Button>
                         </Form>
-                        <div>
+                        <div style={{ marginTop: '3rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <p>
                                 New user? <Link to="/register">Register</Link>
                             </p>

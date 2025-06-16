@@ -7,7 +7,6 @@ const Home = () => {
 
         async function fetchCurrentUser() {
             const res = await getCurrentUser();
-            console.log(res);
         }
 
         fetchCurrentUser();

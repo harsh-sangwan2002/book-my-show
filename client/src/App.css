@@ -1,3 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -6,6 +19,7 @@
 .App-header {
   background-color: #f3f8ff;
   min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -80,11 +94,11 @@ button {
 }
 
 .m-0 {
-  margin: 0
+  margin: 0;
 }
 
 .mt-0 {
-  margin-top: 0
+  margin-top: 0;
 }
 
 .mt-3 {
@@ -97,6 +111,10 @@ button {
 
 .gap-10 {
   gap: 10px;
+}
+
+.d-flex {
+  display: flex;
 }
 
 .justify-content-between {
@@ -186,7 +204,7 @@ hr {
 }
 
 .blue-clr {
-  color: #1890ff
+  color: #1890ff;
 }
 
 .show-ul li {

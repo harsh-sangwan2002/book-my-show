@@ -36,7 +36,7 @@ const Register = () => {
         <>
             <header className="App-header">
                 <main className="main-area mw-500 text-center px-3">
-                    <section className="left-section">
+                    <section className="left-section" style={{ marginBlock: '2rem' }}>
                         <h1 style={{ fontSize: '2.3rem' }}>Register to BookMyShow</h1>
                     </section>
                     <section className="right-section">
@@ -92,7 +92,7 @@ const Register = () => {
                                 Register
                             </Button>
                         </Form>
-                        <div>
+                        <div style={{ marginTop: '2rem' }}>
                             <p>
                                 Already a user? <Link to="/login">Login</Link>
                             </p>
