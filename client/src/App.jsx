@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
+const Admin = lazy(() => import('./pages/Admin/Admin'));
 const Home = lazy(() => import('./pages/Home/Home'));
 const Login = lazy(() => import('./pages/Login/Login'));
 const Register = lazy(() => import('./pages/Register/Register'));
@@ -20,6 +21,14 @@ function App() {
             <ProtectedRoute>
               <Home />
             </ProtectedRoute>} />
+          <Route
+            path='/admin'
+            element={
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            }
+          />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
