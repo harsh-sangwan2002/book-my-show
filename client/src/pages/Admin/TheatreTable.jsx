@@ -1,9 +1,11 @@
-import { Table } from "antd";
+import { Table } from 'antd'
 
-export default function TheatreTable() {
+const TheatreTable = () => {
     return (
         <div>
             <Table />
         </div>
-    );
+    )
 }
+
+export default TheatreTable

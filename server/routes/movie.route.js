@@ -1,11 +1,11 @@
-const express = require("express");
-const { addMovie, getAllMovies, updateMovie, deleteMovie } = require("../controllers/movie.controller");
+const movieRouter = require('express').Router();
 
-const movieRouter = express.Router();
+const movieModel = require('../models/movie.model');
+const { addMovie, getAllMovies, updateMovie, deleteMovie } = require('../controllers/movie.controller');
 
-movieRouter.post("/add-movie", addMovie);
-movieRouter.get("/get-all-movies", getAllMovies);
-movieRouter.put("/update-movie/:movieId", updateMovie);
-movieRouter.delete("/delete-movie/:movieId", deleteMovie);
+movieRouter.get('/', getAllMovies)
+    .post('/add-movie', addMovie)
+    .put('/:id', updateMovie)
+    .delete('/:id', deleteMovie);
 
 module.exports = movieRouter;

@@ -1,7 +1,11 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const movieSchema = new mongoose.Schema({
     movieName: {
+        type: String,
+        required: true,
+    },
+    poster: {
         type: String,
         required: true,
     },
@@ -25,12 +29,7 @@ const movieSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    poster: {
-        type: String,
-        required: true
-    }
 }, { timestamps: true });
 
-const Movies = mongoose.model("movies", movieSchema);
-
-module.exports = Movies;
+const movieModel = mongoose.model('movies', movieSchema);
+module.exports = movieModel;

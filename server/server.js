@@ -13,7 +13,8 @@ const userRouter = require('./routes/user.route');
 const movieRouter = require('./routes/movie.route');
 
 app.use('/api/users', userRouter);
-app.use("/api/movies", movieRouter);
+app.use('/api/movies', movieRouter);
+
 
 app.listen(3000, async () => {
     console.log("Server is running on port 3000");

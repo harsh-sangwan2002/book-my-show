@@ -1,5 +1,5 @@
 import { Tabs } from 'antd'
-import MovieList from "./MovieList"
+import MovieList from './MovieList';
 import TheatreTable from "./TheatreTable"
 
 const Admin = () => {
@@ -18,7 +18,7 @@ const Admin = () => {
     return (
         <div>
             <h1>Admin Page</h1>
-            <Tabs item={tabItems} />
+            <Tabs items={tabItems} />
         </div>
     )
 }

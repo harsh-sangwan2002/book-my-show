@@ -16,7 +16,6 @@ import { Header } from "antd/es/layout/layout";
 const ProtectedRoute = ({ children }) => {
     const [messageApi, contextHolder] = message.useMessage();
     const { user } = useSelector((state) => state.user);
-    console.log(user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -68,7 +67,6 @@ const ProtectedRoute = ({ children }) => {
         try {
             dispatch(showLoading());
             const response = await getCurrentUser();
-            console.log(response.status);
             if (response?.status === 401) {
                 localStorage.removeItem("token");
                 navigate("/login");
