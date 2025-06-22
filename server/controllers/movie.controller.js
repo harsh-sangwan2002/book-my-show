@@ -7,11 +7,13 @@ const addMovie = async (req, res) => {
         await newMovie.save();
 
         res.status(200).json({
+            success: true,
             message: "Movie added successfully",
             data: newMovie,
         });
     } catch (err) {
         res.status(500).json({
+            success: false,
             message: "Error adding movie",
             error: err.message,
         })
@@ -39,16 +41,19 @@ const updateMovie = async (req, res) => {
     try {
 
         const updatedMovie = await movieModel.findByIdAndUpdate(req.params.id, req.body);
-        if (!updateMovie)
+        if (!updatedMovie)
             return res.status(404).json({
+                success: false,
                 message: "Movie not found",
             });
         res.status(200).json({
+            success: true,
             message: "Movie updated successfully",
             data: updatedMovie,
         })
     } catch (err) {
         res.status(500).json({
+            success: false,
             message: "Error updating movie",
             error: err.message,
         })
@@ -57,12 +62,20 @@ const updateMovie = async (req, res) => {
 
 const deleteMovie = async (req, res) => {
     try {
-        await movieModel.findByIdAndDelete(req.params.id);
+        const deletedMovie = await movieModel.findByIdAndDelete(req.params.id);
+        if (!deletedMovie) {
+            return res.status(404).json({
+                success: false,
+                message: "Movie not found",
+            });
+        }
         res.status(200).json({
+            success: true,
             message: "Movie deleted successfully",
         })
     } catch (err) {
         res.status(500).json({
+            success: false,
             message: "Error deleting movie",
             error: err.message,
         })

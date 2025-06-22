@@ -78,8 +78,8 @@ const Register = () => {
                             >
                                 <div style={{ display: 'flex', justifyContent: 'start' }}>
                                     <Radio.Group name='radiogroup' className='flex-start'>
-                                        <Radio value="partner">Yes</Radio>
-                                        <Radio value="user">No</Radio>
+                                        <Radio value={"partner"}>Yes</Radio>
+                                        <Radio value={"user"}>No</Radio>
                                     </Radio.Group>
                                 </div>
                             </Form.Item>

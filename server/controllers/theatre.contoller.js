@@ -6,9 +6,16 @@ const addTheatre = async (req, res) => {
         await newTheatre.save();
 
         await newTheatre.save();
-        res.status(201).json({ message: 'Theatre added successfully', theatre: newTheatre });
+        res.status(201).json({
+            success: true,
+            message: 'Theatre added successfully',
+            theatre: newTheatre
+        });
     } catch (error) {
-        res.status(500).json({ message: 'Error while adding a theatre' });
+        res.status(500).json({
+            success: false,
+            message: 'Error while adding a theatre'
+        });
     }
 }
 
@@ -17,13 +24,23 @@ const updateTheatre = async (req, res) => {
 
         const theatreExists = await theatreModel.findById(req.params.id);
         if (!theatreExists) {
-            return res.status(404).json({ message: 'Theatre not found' });
+            return res.status(404).json({
+                success: false,
+                message: 'Theatre not found'
+            });
         }
 
         const theatre = await theatreModel.findByIdAndUpdate(req.params.id, req.body);
-        res.status(200).json({ message: 'Theatre updated successfully', theatre });
+        res.status(200).json({
+            success: true,
+            message: 'Theatre updated successfully',
+            theatre
+        });
     } catch (err) {
-        res.status(500).json({ message: 'Error while updating theatre' });
+        res.status(500).json({
+            success: false,
+            message: 'Error while updating theatre'
+        });
     }
 }
 
@@ -31,25 +48,45 @@ const getAllTheatres = async (req, res) => {
     try {
         const theatres = await theatreModel.find().populate('owner');
         if (!theatres || theatres.length === 0) {
-            return res.status(404).json({ message: 'No theatres found' });
+            return res.status(404).json({
+                success: false,
+                message: 'No theatres found'
+            });
         }
 
-        res.status(200).json({ message: 'Theatres fetched successfully', data: theatres });
+        res.status(200).json({
+            success: true,
+            message: 'Theatres fetched successfully',
+            data: theatres
+        });
     } catch (err) {
-        res.status(500).json({ message: 'Error while fetching theatres' });
+        res.status(500).json({
+            success: false,
+            message: 'Error while fetching theatres'
+        });
     }
 }
 
 const getAllTheatresForAnOwner = async (req, res) => {
     try {
-        const theatres = await theatreModel.find({ owner: req.params.id })
+        const theatres = await theatreModel.find({ owner: req.params.id });
         if (!theatres || theatres.length === 0) {
-            return res.status(404).json({ message: 'No theatres found' });
+            return res.status(404).json({
+                success: false,
+                message: 'No theatres found'
+            });
         }
 
-        res.status(200).json({ message: 'Theatres fetched successfully', data: theatres });
+        res.status(200).json({
+            success: true,
+            message: 'Theatres fetched successfully',
+            data: theatres
+        });
     } catch (err) {
-        res.status(500).json({ message: 'Error while fetching theatres' });
+        res.status(500).json({
+            success: false,
+            message: 'Error while fetching theatres'
+        });
     }
 }
 
@@ -58,13 +95,22 @@ const deleteTheatre = async (req, res) => {
     try {
         const theatreExists = await theatreModel.findById(req.params.id);
         if (!theatreExists) {
-            return res.status(404).json({ message: 'Theatre not found' });
+            return res.status(404).json({
+                success: false,
+                message: 'Theatre not found'
+            });
         }
 
         await theatreModel.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: 'Theatre deleted successfully' });
+        res.status(200).json({
+            success: true,
+            message: 'Theatre deleted successfully'
+        });
     } catch (err) {
-        res.status(500).json({ message: 'Error while deleting theatre' });
+        res.status(500).json({
+            success: false,
+            message: 'Error while deleting theatre'
+        });
     }
 }
 

@@ -12,9 +12,9 @@ const MovieForm = ({
     setSelectedMovie,
     formType,
     getData,
-    messageApi
 }) => {
     const dispatch = useDispatch();
+    const [form] = Form.useForm();
 
     if (selectedMovie) {
         selectedMovie.releaseDate = moment(selectedMovie.releaseDate).format(
@@ -29,33 +29,32 @@ const MovieForm = ({
             if (formType === "add") {
                 response = await addMovie(values);
             } else {
-                response = await updateMovie(selectedMovie._id, values);
+                response = await updateMovie({ ...values, id: selectedMovie._id });
             }
+
             if (response.success) {
-                getData();
-                messageApi.open({
-                    type: "success",
-                    content: response.message,
-                });
+                message.success(response.message);
+                form.resetFields();
+                setSelectedMovie(null);
                 setIsModalOpen(false);
+                dispatch(hideLoading());
+                // Call getData after modal is closed and loading is hidden
+                setTimeout(() => {
+                    getData();
+                }, 100);
             } else {
-                messageApi.open({
-                    type: "error",
-                    content: response.message,
-                });
+                message.error(response.message || "Operation failed");
+                dispatch(hideLoading());
             }
-            setSelectedMovie(null);
-            dispatch(hideLoading());
         } catch (err) {
+            console.error("Error in form submission:", err);
             dispatch(hideLoading());
-            messageApi.open({
-                type: "error",
-                content: response.message,
-            });
+            message.error(err.message || "An error occurred");
         }
     };
 
     const handleCancel = () => {
+        form.resetFields();
         setIsModalOpen(false);
         setSelectedMovie(null);
     };
@@ -69,7 +68,12 @@ const MovieForm = ({
             width={800}
             footer={null}
         >
-            <Form layout="vertical" initialValues={selectedMovie} onFinish={onFinish}>
+            <Form
+                form={form}
+                layout="vertical"
+                initialValues={selectedMovie}
+                onFinish={onFinish}
+            >
                 <Row gutter={{ xs: 6, sm: 10, md: 12, lg: 16 }}>
                     <Col span={24}>
                         <Form.Item

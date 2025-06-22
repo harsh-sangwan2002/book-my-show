@@ -5,6 +5,8 @@ const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
 const Admin = lazy(() => import('./pages/Admin/Admin'));
 const Home = lazy(() => import('./pages/Home/Home'));
 const Login = lazy(() => import('./pages/Login/Login'));
+const Profile = lazy(() => import('./pages/Profile/Profile'));
+const Partner = lazy(() => import('./pages/Partner/Partner'));
 const Register = lazy(() => import('./pages/Register/Register'));
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword/ForgotPassword'));
 
@@ -26,6 +28,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <Admin />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/partner"
+            element={
+              <ProtectedRoute>
+                <Partner />
               </ProtectedRoute>
             }
           />

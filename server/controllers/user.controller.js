@@ -42,7 +42,7 @@ const loginUser = async (req, res) => {
 const registerUser = async (req, res) => {
 
     try {
-        let { name, email, password, role } = req.body;
+        let { name, email, password, role, isAdmin } = req.body;
 
         if (!name || !email || !password) {
             return res.status(400).json({
@@ -67,6 +67,7 @@ const registerUser = async (req, res) => {
             email,
             password,
             role: role || 'user',
+            isAdmin: isAdmin || false,
         });
 
         const { ...userData } = newUser._doc;
@@ -74,7 +75,6 @@ const registerUser = async (req, res) => {
             message: "User registered successfully",
             success: true,
             user: userData,
-            token
         });
     } catch (err) {
         res.status(500).json({
